@@ -1,6 +1,6 @@
 jQuery(function($) {
   
-  var names = $('textarea').val();
+  var names = $('#textarea').val();
   var list = new Array();
   list = names.split(',');
   
