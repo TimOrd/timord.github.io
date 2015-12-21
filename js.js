@@ -7,9 +7,7 @@ jQuery(function($){
     
   var randomPicker = list[Math.floor(Math.random() * list.length)];
   var selected = randomPicker; 
-  
-    //alert( selected );
-    
+
     $('p.bg-success').html(selected);
     
   });
