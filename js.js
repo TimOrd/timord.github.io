@@ -1,8 +1,8 @@
 jQuery(function($) {
-  
+
   var names = $('#textarea').val();
-  //var list = new Array();
-  //list = names.split(',');
+  var list = new Array();
+  list = names.split(' ');
   
   var randomPicker = names[Math.floor(Math.random() * names.length)];
   
@@ -11,6 +11,6 @@ jQuery(function($) {
   
 
   $('button').click(function(){
-    alert(selected);
+    alert(list);
   });
 });
