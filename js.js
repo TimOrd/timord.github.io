@@ -7,6 +7,6 @@ jQuery(function($) {
   
 
   $('button').click(function(){
-    alert(list);
+    console.log(list);
   });
 });
