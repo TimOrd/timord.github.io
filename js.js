@@ -1,16 +1,16 @@
-jQuery(function($) {
-
+jQuery(function($){
+  
+  $('button').click(function(){
   var names = $('#textarea').val();
   var list = new Array();
-  list = names.split(' ');
+  list = names.split(',');
+    
+  var randomPicker = list[Math.floor(Math.random() * list.length)];
+  var selected = randomPicker; 
   
-//  var randomPicker = names[Math.floor(Math.random() * names.length)];
-  
-//  var selected = randomPicker[0];
-  
-  
-
-  $('button').click(function(){
-    alert(list);
+    //alert( selected );
+    
+    $('p.bg-success').html(selected);
+    
   });
 });
