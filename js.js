@@ -1,4 +1,4 @@
-jQuery function($) {
+jQuery(function($) {
   
   var names = $('textarea').val();
   var list = array();
@@ -9,4 +9,4 @@ jQuery function($) {
   $('button').click(function(){
     alert(list);
   });
-}
+});
