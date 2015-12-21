@@ -4,9 +4,9 @@ jQuery(function($) {
   var list = new Array();
   list = names.split(' ');
   
-  var randomPicker = names[Math.floor(Math.random() * names.length)];
+//  var randomPicker = names[Math.floor(Math.random() * names.length)];
   
-  var selected = randomPicker[0];
+//  var selected = randomPicker[0];
   
   
 
