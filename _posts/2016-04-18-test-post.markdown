@@ -6,4 +6,4 @@ permalink: test-post
 ---
 # Test text.
 
-  This should be a code block. <?php echo 'Hello, World!' ?>
+    This should be a code block. <?php echo 'Hello, World!' ?>
