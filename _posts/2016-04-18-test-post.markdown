@@ -2,5 +2,6 @@
 published: true
 title: Test post
 layout: post
+permalink: test-post
 ---
 Test text.
