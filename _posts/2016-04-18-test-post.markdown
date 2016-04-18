@@ -4,4 +4,6 @@ title: Test post
 layout: post
 permalink: test-post
 ---
-#Test text.
+# Test text.
+
+  This should be a code block. <?php echo 'Hello, World!' ?>
