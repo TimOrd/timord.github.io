@@ -1,9 +1,10 @@
 ---
-published: true
 title: Test post
-layout: post
+date: 2016-04-18 00:00:00 Z
 permalink: test-post
+layout: post
 ---
+
 # Test text.
 
     This should be a code block. <?php echo 'Hello, World!' ?>
