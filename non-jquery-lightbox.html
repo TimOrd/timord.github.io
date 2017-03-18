@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Non jQuery lightbox</title>
+
+    <style media="screen">
+    h1 {
+      font-family: sans-serif;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+    }
+    .popup-img {
+      display: block;
+      margin: 0 auto;
+    }
+    .popup-img:hover {
+      cursor: pointer;
+    }
+    .popup-wrapper {
+      position: fixed;
+      background-color: rgba(0,0,0,0.85);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 30px;
+      text-align: center;
+    }
+    .popup-wrapper .popup-container {
+      position: relative;
+      display: inline-block;
+      padding: 15px;
+      background-color: #FFF;
+    }
+    .popup-wrapper .popup-container:before {
+      font-family: sans-serif;
+      font-size: 16px;
+      content: "X";
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 15px;
+      height: 15px;
+      background-color: #333;
+      color: #FFF;
+      font-weight: 700;
+      padding: 10px;
+      border-radius: 50%;
+      border: 3px solid #FFF;
+    }
+    .popup-wrapper .popup-container:hover:before {
+      cursor: pointer;
+    }
+    .popup-wrapper .popup-container img {
+      max-width: 100%;
+      height: auto;
+    }
+    </style>
+
+  </head>
+  <body>
+    <div class="container">
+      <h1>Non jQuery lightbox</h1>
+      <img class="popup-img" src="https://placekitten.com/g/520/520" width="300" height="auto">
+    </div>
+
+    <script type="text/javascript">
+
+      function fadeIn(el) {
+        el.style.opacity = 0;
+
+        var last = +new Date();
+        var tick = function() {
+          el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+          last = +new Date();
+
+          if (+el.style.opacity < 1) {
+            (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+          }
+        };
+
+        tick();
+      }
+
+      document.querySelector('.popup-img').onclick = function() {
+
+        // Creates the lightbox for the image to fit in
+        var popup_img_src = document.querySelector('.popup-img').getAttribute('src');
+        var popup_full_sized_img = document.createElement('div');
+        popup_full_sized_img.classList.add('popup-wrapper');
+        popup_full_sized_img.innerHTML = '<div class="popup-container"><img src="'+ popup_img_src +'"></div>';
+        document.body.appendChild(popup_full_sized_img);
+
+        fadeIn( document.querySelector('.popup-wrapper') );
+
+        var popup = document.querySelector('.popup-wrapper');
+
+        // Destroys lightbox once it's clicked on
+        popup.onclick = function() {
+          popup.parentNode.removeChild(popup);
+        };
+
+      }
+
+    </script>
+  </body>
+</html>
