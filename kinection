@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Demo</title>
+</head>
+<body>
+
+<form method="POST" onsubmit="displayExercises(event)">
+    <div class="level">
+        <label>
+            <input type="radio" name="level" value="beginner"> Beginner
+        </label>
+        <label>
+            <input type="radio" name="level" value="intermediate"> Intermediate
+        </label>
+        <label>
+            <input type="radio" name="level" value="advanced"> Advanced
+        </label>
+    </div>
+
+    <div class="type">
+        <label>
+            <input type="radio" name="type" value="chest-triceps"> Chest &amp; Triceps
+        </label>
+        <label>
+            <input type="radio" name="type" value="back-biceps"> Back &amp; Biceps
+        </label>
+        <label>
+            <input type="radio" name="type" value="legs"> Legs
+        </label>
+        <label>
+            <input type="radio" name="type" value="shoulders"> Shoulders
+        </label>
+        <label>
+            <input type="radio" name="type" value="abs"> Abs
+        </label>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+<ul id="exercisesList"></ul>
+
+
+
+<script>
+
+    var ul = document.getElementById("exercisesList");
+
+    var exercises = [
+        {
+            "type" : "chest-triceps",
+            "level" : "beginner",
+            "name"  : "Knee Pushups",
+            "image" : "https://placehold.it/30x30",
+            "description" : "This is a description of a Knee Pushup"
+        },
+        {
+            "type" : "chest-triceps",
+            "level" : "beginner",
+            "name"  : "Wide Knee Pushups",
+            "image" : "https://placehold.it/30x30",
+            "description" : "This is a description of a Wide Knee Pushup"
+        },
+        {
+            "type" : "back-biceps",
+            "level" : "intermediate",
+            "name"  : "Pullups",
+            "image" : "https://placehold.it/30x30",
+            "description" : "This is a description of a Knee Pushup"
+        },
+        {
+            "type" : "back-biceps",
+            "level" : "intermediate",
+            "name"  : "Wide Pullups",
+            "image" : "https://placehold.it/30x30",
+            "description" : "This is a description of a Wide Knee Pushup"
+        },
+        {
+            "type" : "back-biceps",
+            "level" : "beginner",
+            "name"  : "Australian Pullups",
+            "image" : "https://placehold.it/30x30",
+            "description" : "This is a description of a Wide Knee Pushup"
+        },
+        {
+            "type" : "abs",
+            "level" : "beginner",
+            "name"  : "Crunches",
+            "image" : "https://placehold.it/30x30",
+            "description" : "This is a description of a Wide Knee Pushup"
+        }
+    ];
+
+    function displayExercises(e, type, level) {
+
+        e.preventDefault();
+
+        if ( ul.getElementsByTagName('li').length >= 1 ) {
+            ul.innerHTML = '';
+        }
+
+        exercises = exercises.sort(function() {
+            return 0.5 - Math.random();
+        });
+
+        var chosenExercises = [];
+        var chosenType = document.querySelector('input[name="type"]:checked').value;
+        var chosenLevel = document.querySelector('input[name="level"]:checked').value;
+
+        chosenExercises = exercises.filter(function(exercise) {
+            return exercise.type == chosenType && exercise.level == chosenLevel;
+        });
+
+        chosenExercises.forEach(function(exercise) {
+            var li = document.createElement("li");
+            
+            ul.appendChild(li).insertAdjacentHTML("afterbegin", 
+                "<h2>" + exercise.name + "</h2>" +
+                "<img src=" + exercise.image + ">" + 
+                "<p>" + exercise.description + "</p>"
+            );
+        });
+    }
+
+
+</script>
+
+</body>
+</html>
