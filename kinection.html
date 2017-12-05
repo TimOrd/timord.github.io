@@ -1,131 +1,214 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Demo</title>
+  <meta charset="utf-8">
+  <title>Vue Demo</title>
+
+  <style type="text/css">
+
+  .loader {
+    position: relative;
+    height: 1050px;
+    margin: 0;
+  }
+
+  .loader:before {
+      position: absolute;
+      content: " ";
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.95);
+  }
+
+  .loader:after {
+      position: absolute;
+      content: " ";
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 10px solid #CCC;
+      border-radius: 50%;
+      border-top: 10px solid #3498db;
+      width: 70px;
+      height: 70px;
+      display: block;
+      margin: 15% auto 0;
+      -webkit-animation: spin 0.5s linear infinite; /* Safari */
+      animation: spin 0.5s linear infinite;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  </style>
+
+  <script src="https://unpkg.com/vue"></script>
 </head>
-<body>
+<body class="loader">
 
-<form method="POST" onsubmit="displayExercises(event)">
-    <div class="level">
-        <label>
-            <input type="radio" name="level" value="beginner"> Beginner
-        </label>
-        <label>
-            <input type="radio" name="level" value="intermediate"> Intermediate
-        </label>
-        <label>
-            <input type="radio" name="level" value="advanced"> Advanced
-        </label>
-    </div>
+<div id="app">
 
-    <div class="type">
-        <label>
-            <input type="radio" name="type" value="chest-triceps"> Chest &amp; Triceps
-        </label>
-        <label>
-            <input type="radio" name="type" value="back-biceps"> Back &amp; Biceps
-        </label>
-        <label>
-            <input type="radio" name="type" value="legs"> Legs
-        </label>
-        <label>
-            <input type="radio" name="type" value="shoulders"> Shoulders
-        </label>
-        <label>
-            <input type="radio" name="type" value="abs"> Abs
-        </label>
-    </div>
+  <div class="level">
+    <label>
+      <input type="radio" name="level" value="beginner" v-model="level"> Beginner
+    </label>
+    <label>
+      <input type="radio" name="level" value="intermediate" v-model="level"> Intermediate
+    </label>
+    <label>
+      <input type="radio" name="level" value="advanced" v-model="level"> Advanced
+    </label>
+  </div>
 
-    <button type="submit">Submit</button>
-</form>
+  <div class="type">
+    <label>
+      <input type="radio" name="type" value="chest-triceps" v-model="type"> Chest &amp; Triceps
+    </label>
+    <label>
+      <input type="radio" name="type" value="back-biceps" v-model="type"> Back &amp; Biceps
+    </label>
+    <label>
+      <input type="radio" name="type" value="legs" v-model="type"> Legs
+    </label>
+    <label>
+      <input type="radio" name="type" value="shoulders" v-model="type"> Shoulders
+    </label>
+    <label>
+      <input type="radio" name="type" value="abs" v-model="type"> Abs
+    </label>
+    <label>
+        <input type="radio" name="type" value="whole-body" v-model="type"> Whole Body
+    </label>
+  </div>
 
-<ul id="exercisesList"></ul>
+  <ul>
+    <li v-for="exercise in filteredExercises">
+      <h2>
+        {{ exercise.name }}
+      </h2>
+      <img :src="exercise.image">
+      <p>
+        {{ exercise.description }}
+      </p>
+    </li>
+  </ul>
+</div>
 
+<script type="text/javascript">
+  window.onload = function () { 
+    setTimeout(function(){ 
+      document.querySelector('body').classList.remove("loader");
+    }, 1500);
+  }
 
+  new Vue({
+  el: '#app',
+  computed: {
+    filteredExercises: function() {
+      filtered = [];
 
-<script>
+        if (this.type == 'whole-body') {
 
-    var ul = document.getElementById("exercisesList");
+            filtered = this.exercises.filter(function(exercise) {
+                return exercise.level == this.level || exercise.level == 'any';
+            }.bind(this));
 
-    var exercises = [
-        {
-            "type" : "chest-triceps",
-            "level" : "beginner",
-            "name"  : "Knee Pushups",
-            "image" : "https://placehold.it/30x30",
-            "description" : "This is a description of a Knee Pushup"
-        },
-        {
-            "type" : "chest-triceps",
-            "level" : "beginner",
-            "name"  : "Wide Knee Pushups",
-            "image" : "https://placehold.it/30x30",
-            "description" : "This is a description of a Wide Knee Pushup"
-        },
-        {
-            "type" : "back-biceps",
-            "level" : "intermediate",
-            "name"  : "Pullups",
-            "image" : "https://placehold.it/30x30",
-            "description" : "This is a description of a Knee Pushup"
-        },
-        {
-            "type" : "back-biceps",
-            "level" : "intermediate",
-            "name"  : "Wide Pullups",
-            "image" : "https://placehold.it/30x30",
-            "description" : "This is a description of a Wide Knee Pushup"
-        },
-        {
-            "type" : "back-biceps",
-            "level" : "beginner",
-            "name"  : "Australian Pullups",
-            "image" : "https://placehold.it/30x30",
-            "description" : "This is a description of a Wide Knee Pushup"
-        },
-        {
-            "type" : "abs",
-            "level" : "beginner",
-            "name"  : "Crunches",
-            "image" : "https://placehold.it/30x30",
-            "description" : "This is a description of a Wide Knee Pushup"
-        }
-    ];
+        } else {
 
-    function displayExercises(e, type, level) {
+            filtered = this.exercises.filter(function(exercise) {
+                return exercise.type == this.type;
+            }.bind(this));
 
-        e.preventDefault();
+            filtered = filtered.filter(function(exercise) {
+                return exercise.level == this.level || exercise.level == 'any';
+            }.bind(this));
 
-        if ( ul.getElementsByTagName('li').length >= 1 ) {
-            ul.innerHTML = '';
         }
 
-        exercises = exercises.sort(function() {
-            return 0.5 - Math.random();
-        });
+      filtered = filtered.sort(function() {
+          return 0.5 - Math.random();
+      });
 
-        var chosenExercises = [];
-        var chosenType = document.querySelector('input[name="type"]:checked').value;
-        var chosenLevel = document.querySelector('input[name="level"]:checked').value;
-
-        chosenExercises = exercises.filter(function(exercise) {
-            return exercise.type == chosenType && exercise.level == chosenLevel;
-        });
-
-        chosenExercises.forEach(function(exercise) {
-            var li = document.createElement("li");
-            
-            ul.appendChild(li).insertAdjacentHTML("afterbegin", 
-                "<h2>" + exercise.name + "</h2>" +
-                "<img src=" + exercise.image + ">" + 
-                "<p>" + exercise.description + "</p>"
-            );
-        });
+      filtered = filtered.slice(0, 5);
+      
+      return filtered;
     }
-
-
+  },
+  data: {
+    level: [],
+    type: [],
+    exercises: [{
+      "type": "chest-triceps",
+      "level": "beginner",
+      "name": "Knee Pushups",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Knee Pushup"
+    }, {
+      "type": "chest-triceps",
+      "level": "beginner",
+      "name": "Wide Knee Pushups",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Wide Knee Pushup"
+    }, {
+      "type": "back-biceps",
+      "level": "intermediate",
+      "name": "Pullups",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Knee Pushup"
+    }, {
+      "type": "back-biceps",
+      "level": "intermediate",
+      "name": "Wide Pullups",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Wide Knee Pushup"
+    }, {
+      "type": "back-biceps",
+      "level": "beginner",
+      "name": "Australian Pullups",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Wide Knee Pushup"
+    }, {
+      "type": "abs",
+      "level": "any",
+      "name": "Crunches",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Wide Knee Pushup"
+    }, {
+      "type": "legs",
+      "level": "any",
+      "name": "Squats",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Squat"
+    }, {
+      "type": "legs",
+      "level": "intermediate",
+      "name": "Switching Lunges",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of Switching Lunges"
+    }, {
+      "type": "legs",
+      "level": "advanced",
+      "name": "Pistol Squats",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Pistol Squat"
+    }, {
+      "type": "legs",
+      "level": "any",
+      "name": "Jump Squats",
+      "image": "https://placehold.it/30x30",
+      "description": "This is a description of a Jump Squat"
+    }]
+  }
+})
 </script>
 
 </body>
