@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Jargon Decrypter Bot</title>
+	<title>Jargon Translator</title>
 	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -59,7 +59,7 @@
 
 		textarea {
 			width: 100%;
-			min-height: 300px;
+			min-height: 200px;
 			font-size: 20px;
 			font-family: verdana;
 			padding: 15px;
@@ -102,6 +102,7 @@
 
 		h1 {
 			text-align: center;
+			font-size: 30px;
 		}
 
 		#loadingMessage {
@@ -129,15 +130,25 @@
 			animation: dropIn 1s;
 			margin-bottom: 30px;
 		}
+		
+		@media(min-width: 480px) {
+			h1 {
+				font-size: 40px;
+			}
+			
+			textarea {
+				min-height: 300px;
+			}
+		}
 	</style>
 </head>
 <body>
 
 	<div class="wrapper">
 
-		<h1>Jargon Decrypter Bot</h1>
+		<h1>Jargon Translator</h1>
 
-		<div id="loadingMessage">Decrypting</div>
+		<div id="loadingMessage">Translating</div>
 
 		<div id="uselessResponse"></div>
 
@@ -148,7 +159,7 @@
 				<textarea id="textarea" placeholder="Enter some jargon..."></textarea>
 			</div>
 
-			<button type="submit">Decrypt this jargon!</button>
+			<button type="submit">Translate this jargon!</button>
 		</form>
 
 	</div>
@@ -164,10 +175,10 @@
 		var listOfUselessResponses = [
 				'Error: No idea',
 				'Error: I dunno, you\'re on your own',
-				'Decryption: "I have no idea what I\'m talking about"',
-				'Decryption: "I don\'t understand what you mean and I don\'t care"',
+				'Translation: "I have no idea what I\'m talking about"',
+				'Translation: "I don\'t understand what you mean and I don\'t care"',
 				'Error: This jargon\'s too much for me to decrypt',
-				'Decryption: I get paid a lot to talk crap so I\'ll carry on doing it'
+				'Translation: I get paid a lot to talk crap so I\'ll carry on doing it'
 			];
 
 		form.addEventListener('submit', function(e){
